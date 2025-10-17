@@ -1,0 +1,230 @@
+{
+  "name": "Project_2_form to sheet to mail",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# Autamation1\n### this is my first automation in which im  making a form and from that form I'm sending a mail \n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        112,
+        -224
+      ],
+      "id": "48bb1c12-27a4-400f-9d0f-da5569e4ccc2",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "formTitle": "Hello Everyone",
+        "formDescription": "This is my first n8n form created by me and also I'm connecting this with email",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name :",
+              "placeholder": "Enter your name ",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Departement",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "IT"
+                  },
+                  {
+                    "option": "AIML"
+                  },
+                  {
+                    "option": "CSIT"
+                  },
+                  {
+                    "option": "CS"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Password",
+              "fieldType": "password",
+              "placeholder": "Enter your password",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "placeholder": "Enter your mail I'd",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": true,
+          "buttonLabel": "Register"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c028c53c-ffa3-4cbb-9d9c-35bb58d8a871",
+      "name": "On form submission",
+      "webhookId": "f381cc88-c207-45e0-bbfb-0380bd7d6df4",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "retryOnFail": false,
+      "notesInFlow": true,
+      "notes": "hello every one this is my first form"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Y4P88NoQfV3KWnAVccODTXX9hNOQNebuc_u5twpO0VA",
+          "mode": "list",
+          "cachedResultName": "Form-mail",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Y4P88NoQfV3KWnAVccODTXX9hNOQNebuc_u5twpO0VA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Y4P88NoQfV3KWnAVccODTXX9hNOQNebuc_u5twpO0VA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json['Name :'] }}",
+            "Departement ": "={{ $json.Departement }}",
+            "password ": "={{ $json.Password }}",
+            "Email": "={{ $json.Email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Departement ",
+              "displayName": "Departement ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "password ",
+              "displayName": "password ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "d11a4f61-131f-4377-b9d0-819e520d9dbb",
+      "name": "Append row in sheet",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tLLfSIAb5tcIx91U",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "Thanks for register",
+        "message": "=Hi , {{ $json.Name }} this side Krishna thanks for registration in our company",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "db0b7ad8-34e8-4005-b6e5-68ae2bb2c6e1",
+      "name": "Send a message",
+      "webhookId": "68a6a172-007b-45d0-8fca-afd80da9513a",
+      "alwaysOutputData": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "i96nNgoizFzkDc7W",
+          "name": "Gmail account 3"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "22896d27-ef95-4e0e-9de8-63eca2209241",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d5a70d6a39b91879adaf53978646ea33a87603b5b9546fb36da7c34b46ef1f72"
+  },
+  "id": "cIwABBogWta2LTfD",
+  "tags": []
+}
